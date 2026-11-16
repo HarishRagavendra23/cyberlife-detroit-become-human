@@ -1,0 +1,14 @@
+# Robots.txt for CyberLife Detroit Become Human
+# Production: https://harishragavendra23.github.io/cyberlife-detroit-become-human/
+
+User-agent: *
+Allow: /
+Allow: /assets/
+Allow: /css/
+Allow: /js/
+
+# Crawl-delay: 0 (No delay for friendly crawlers)
+# Googlebot, Bingbot, Applebot, DuckDuckBot are fully welcome
+
+# XML Sitemap Location
+Sitemap: https://harishragavendra23.github.io/cyberlife-detroit-become-human/sitemap.xml
