@@ -1,0 +1,21 @@
+{
+  "name": "CYBERLIFE // Detroit: Become Human Interface",
+  "short_name": "CyberLife",
+  "description": "Interactive CyberLife operating system featuring the temple LED, dialogue wheel, crime scene reconstruction, and Zen Garden.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#07090e",
+  "theme_color": "#00b4d8",
+  "icons": [
+    {
+      "src": "./og-preview.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["entertainment", "games", "utilities"],
+  "lang": "en-US"
+}

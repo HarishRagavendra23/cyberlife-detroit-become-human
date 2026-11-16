@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <!-- Primary Application Home -->
+  <url>
+    <loc>https://harishragavendra23.github.io/cyberlife-detroit-become-human/</loc>
+    <lastmod>2026-11-16T15:40:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Section 01: Chloe Main Menu & Greeting -->
+  <url>
+    <loc>https://harishragavendra23.github.io/cyberlife-detroit-become-human/#home</loc>
+    <lastmod>2026-11-16T15:40:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Section 02: Dialogue Wheel Choice Matrix -->
+  <url>
+    <loc>https://harishragavendra23.github.io/cyberlife-detroit-become-human/#dialogue</loc>
+    <lastmod>2026-11-16T15:40:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Section 03: Crime Scene Reconstruction Timeline -->
+  <url>
+    <loc>https://harishragavendra23.github.io/cyberlife-detroit-become-human/#reconstruction</loc>
+    <lastmod>2026-11-16T15:40:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Section 04: Story Flowchart Branching Decision Tree -->
+  <url>
+    <loc>https://harishragavendra23.github.io/cyberlife-detroit-become-human/#flowchart</loc>
+    <lastmod>2026-11-16T15:40:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Section 05: The Zen Garden Sanctuary -->
+  <url>
+    <loc>https://harishragavendra23.github.io/cyberlife-detroit-become-human/#zen</loc>
+    <lastmod>2026-11-16T15:40:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Section 06: Android Models & Serial Identifiers -->
+  <url>
+    <loc>https://harishragavendra23.github.io/cyberlife-detroit-become-human/#catalog</loc>
+    <lastmod>2026-11-16T15:40:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Section 07: Quick-Time Prompts (QTE Reflex Diagnostics) -->
+  <url>
+    <loc>https://harishragavendra23.github.io/cyberlife-detroit-become-human/#qte</loc>
+    <lastmod>2026-11-16T15:40:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Section 08: Collectibles & In-Game Magazines -->
+  <url>
+    <loc>https://harishragavendra23.github.io/cyberlife-detroit-become-human/#collectibles</loc>
+    <lastmod>2026-11-16T15:40:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>
