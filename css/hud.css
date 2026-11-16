@@ -1,0 +1,781 @@
+/**
+ * Detroit: Become Human - HUD & Interactive System Styles
+ * Temple LED, Chapter HUD, Dialogue Wheel, Probability Gauge, Relationship Indicators, QTE.
+ */
+
+/* ==========================================================================
+   HEADER HUD & TEMPLE LED
+   ========================================================================== */
+
+.cyberlife-header-hud {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-tech);
+  box-shadow: var(--shadow-hud);
+  padding: 0.75rem 1.5rem;
+}
+
+.header-inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Brand Logo (CyberLife Triangle) */
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.cyberlife-logo-triangle {
+  width: 32px;
+  height: 32px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.triangle-svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: var(--thirium-cyan);
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 6px var(--thirium-glow));
+  transition: transform 0.4s ease;
+}
+
+.brand-group:hover .triangle-svg {
+  transform: rotate(180deg);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: 0.18em;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.brand-sub {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  color: var(--thirium-blue);
+}
+
+/* Temple LED Ring */
+.temple-led-widget {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.35rem 0.85rem;
+  background: var(--thirium-dim);
+  border: 1px solid var(--border-tech);
+  clip-path: var(--chamfer-sm);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.temple-led-widget:hover {
+  background: rgba(0, 180, 216, 0.25);
+  box-shadow: 0 0 15px var(--thirium-glow);
+}
+
+.temple-led-ring {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+}
+
+/* Outer rotating halo */
+.temple-led-ring::before {
+  content: '';
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px dashed currentColor;
+  animation: rotateLed 6s linear infinite;
+  opacity: 0.7;
+}
+
+@keyframes rotateLed {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Core LED Light States */
+.temple-led-ring.state-blue {
+  background: var(--led-blue);
+  color: var(--led-blue);
+  box-shadow: 0 0 14px var(--led-blue), 0 0 24px rgba(0, 229, 255, 0.6);
+  animation: pulseLedBlue 3s infinite ease-in-out;
+}
+
+.temple-led-ring.state-yellow {
+  background: var(--led-yellow);
+  color: var(--led-yellow);
+  box-shadow: 0 0 16px var(--led-yellow), 0 0 28px rgba(255, 183, 3, 0.8);
+  animation: pulseLedYellow 1s infinite alternate;
+}
+
+.temple-led-ring.state-red {
+  background: var(--led-red);
+  color: var(--led-red);
+  box-shadow: 0 0 18px var(--led-red), 0 0 32px rgba(255, 0, 51, 0.9);
+  animation: pulseLedRed 0.4s infinite alternate;
+}
+
+@keyframes pulseLedBlue {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+@keyframes pulseLedYellow {
+  0% { opacity: 0.7; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1.15); }
+}
+
+@keyframes pulseLedRed {
+  0% { opacity: 0.8; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1.25); }
+}
+
+.temple-led-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.led-meta-title {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.led-status-text {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+}
+
+/* Chapter & Detroit Live Timestamp */
+.chapter-meta-hud {
+  display: flex;
+  flex-direction: column;
+}
+
+.chapter-title-stamp {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.12em;
+  color: var(--text-primary);
+}
+
+.chapter-subtitle-stamp {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--thirium-blue);
+  letter-spacing: 0.06em;
+}
+
+/* Mission Probability & Instability HUD Bars */
+.telemetry-bars-group {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.hud-stat-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 140px;
+}
+
+.stat-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+
+.stat-bar-track {
+  width: 100%;
+  height: 7px;
+  background: var(--border-subtle);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.prob-bar-fill {
+  height: 100%;
+  background: var(--thirium-cyan);
+  box-shadow: 0 0 10px var(--thirium-glow);
+  transition: width 0.5s ease;
+}
+
+.prob-bar-fill.critical {
+  background: var(--led-red);
+  box-shadow: 0 0 10px var(--warning-glow);
+}
+
+.inst-bar-fill {
+  height: 100%;
+  background: var(--led-yellow);
+  transition: width 0.5s ease;
+}
+
+.inst-bar-fill.deviant {
+  background: var(--led-red);
+  box-shadow: 0 0 10px var(--warning-glow);
+}
+
+/* Header Action Controls */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hud-icon-btn {
+  background: transparent;
+  border: 1px solid var(--border-tech);
+  color: var(--text-primary);
+  padding: 0.45rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  clip-path: var(--chamfer-sm);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.hud-icon-btn:hover {
+  background: var(--thirium-dim);
+  border-color: var(--thirium-cyan);
+  box-shadow: 0 0 10px var(--thirium-glow);
+}
+
+.hud-icon-btn.primary {
+  background: var(--thirium-cyan);
+  color: #000000;
+  font-weight: 700;
+  border-color: var(--thirium-cyan);
+}
+
+.hud-icon-btn.primary:hover {
+  background: #ffffff;
+  box-shadow: 0 0 15px var(--thirium-glow);
+}
+
+/* ==========================================================================
+   NAVIGATION BAR
+   ========================================================================== */
+
+.cyberlife-subnav-bar {
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0.45rem 1.5rem;
+}
+
+.subnav-inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  overflow-x: auto;
+}
+
+.nav-links-list {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.4rem 0.9rem;
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border: 1px solid transparent;
+  clip-path: var(--chamfer-sm);
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  color: var(--thirium-blue);
+  background: var(--thirium-dim);
+}
+
+.nav-link.active {
+  color: var(--text-primary);
+  background: var(--thirium-dim);
+  border-color: var(--thirium-cyan);
+  box-shadow: 0 0 12px var(--thirium-glow);
+}
+
+.nav-link-num {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--thirium-blue);
+}
+
+.nav-shortcuts-hint {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   THE DIALOGUE WHEEL (CARDINAL 4-WAY SELECTION)
+   ========================================================================== */
+
+.dialogue-wheel-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2.5rem 0;
+  position: relative;
+}
+
+.wheel-prompt-hud {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.hud-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--thirium-blue);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.wheel-prompt-text {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.feedback-flash {
+  color: var(--thirium-cyan);
+  text-shadow: 0 0 10px var(--thirium-glow);
+  animation: flashText 0.3s ease-out;
+}
+
+@keyframes flashText {
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Disc & SVG Ring */
+.dialogue-wheel-disc {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wheel-svg-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.ring-bg {
+  fill: none;
+  stroke: var(--border-tech);
+  stroke-width: 2;
+  opacity: 0.4;
+}
+
+.ring-timer {
+  fill: none;
+  stroke: var(--thirium-cyan);
+  stroke-width: 3;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: stroke-dashoffset 0.8s linear;
+}
+
+.crosshair-tick {
+  stroke: var(--thirium-blue);
+  stroke-width: 2;
+  opacity: 0.6;
+}
+
+/* Center Core */
+.wheel-center-core {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 2px solid var(--thirium-cyan);
+  box-shadow: 0 0 20px var(--thirium-glow), 0 0 10px rgba(0, 180, 216, 0.3) inset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.wheel-center-core:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 30px var(--thirium-glow);
+}
+
+.core-triangle {
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 12px solid var(--thirium-cyan);
+  margin-bottom: 2px;
+}
+
+.core-mode-label {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--text-primary);
+}
+
+.core-timer-val {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--thirium-blue);
+}
+
+/* 4 Cardinal Choice Buttons */
+.wheel-choice-btn {
+  position: absolute;
+  background: var(--bg-card);
+  border: 1px solid var(--border-tech);
+  padding: 0.6rem 1rem;
+  min-width: 140px;
+  clip-path: var(--chamfer-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  box-shadow: var(--shadow-hud);
+  z-index: 10;
+}
+
+.wheel-choice-btn:hover, .wheel-choice-btn.selected {
+  background: var(--thirium-dim);
+  border-color: var(--thirium-cyan);
+  box-shadow: 0 0 20px var(--thirium-glow);
+  transform: scale(1.08);
+}
+
+.wheel-choice-btn.selected {
+  background: var(--thirium-cyan);
+  color: #000;
+}
+
+.wheel-choice-btn.selected .choice-label,
+.wheel-choice-btn.selected .choice-desc,
+.wheel-choice-btn.selected .choice-keybind {
+  color: #000;
+}
+
+/* Positioning */
+.choice-up {
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.choice-up:hover {
+  transform: translateX(-50%) translateY(-5px);
+}
+
+.choice-down {
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.choice-down:hover {
+  transform: translateX(-50%) translateY(5px);
+}
+
+.choice-left {
+  left: -50px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.choice-left:hover {
+  transform: translateY(-50%) translateX(-5px);
+}
+
+.choice-right {
+  right: -50px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.choice-right:hover {
+  transform: translateY(-50%) translateX(5px);
+}
+
+.choice-keybind {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--thirium-blue);
+  background: rgba(0, 180, 216, 0.12);
+  padding: 1px 5px;
+  border-radius: 2px;
+  margin-bottom: 2px;
+}
+
+.choice-label {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+}
+
+.choice-desc {
+  font-family: var(--font-main);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 1px;
+}
+
+/* Mode Switcher */
+.wheel-mode-switcher {
+  display: flex;
+  gap: 8px;
+  margin-top: 2rem;
+}
+
+.mode-tab-btn {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 0.4rem 0.9rem;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  clip-path: var(--chamfer-sm);
+  transition: all 0.2s ease;
+}
+
+.mode-tab-btn.active {
+  background: var(--thirium-cyan);
+  color: #000;
+  border-color: var(--thirium-cyan);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   RELATIONSHIP TOASTS (DETROIT IN-GAME HUD)
+   ========================================================================== */
+
+.relationship-toasts-container {
+  position: fixed;
+  top: 140px;
+  right: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.rel-toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.75rem 1.4rem;
+  clip-path: var(--chamfer-md);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  transform: translateX(120%);
+  opacity: 0;
+  transition: transform 0.35s cubic-bezier(0.18, 0.89, 0.32, 1.28), opacity 0.35s ease;
+  pointer-events: auto;
+}
+
+.rel-toast.visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.rel-toast.positive {
+  background: rgba(0, 229, 255, 0.94);
+  color: #06111e;
+  border-left: 4px solid #ffffff;
+}
+
+.rel-toast.negative {
+  background: rgba(255, 0, 51, 0.94);
+  color: #ffffff;
+  border-left: 4px solid #ffffff;
+}
+
+.rel-toast-triangle {
+  font-size: 1.3rem;
+  font-weight: 900;
+}
+
+.rel-toast-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.rel-toast-title {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  opacity: 0.85;
+}
+
+.rel-toast-text {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+/* ==========================================================================
+   CONNOR'S DETECTIVE SCANNER OVERLAY
+   ========================================================================== */
+
+.detroit-scanner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 997;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.detroit-scanner-overlay.visible {
+  opacity: 1;
+}
+
+.scanner-grid {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(0, 229, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 255, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.scanner-vignette {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 120px rgba(0, 180, 216, 0.3) inset;
+}
+
+.scanner-hud-bar {
+  position: absolute;
+  top: 90px;
+  left: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.scanner-crosshair {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 90px;
+  height: 90px;
+  margin-top: -45px;
+  margin-left: -45px;
+  pointer-events: none;
+  transition: transform 0.08s ease-out;
+}
+
+.reticle-corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--thirium-cyan);
+}
+
+.reticle-corner.top-left { top: 0; left: 0; border-right: none; border-bottom: none; }
+.reticle-corner.top-right { top: 0; right: 0; border-left: none; border-bottom: none; }
+.reticle-corner.bottom-left { bottom: 0; left: 0; border-right: none; border-top: none; }
+.reticle-corner.bottom-right { bottom: 0; right: 0; border-left: none; border-top: none; }
+
+.reticle-readout {
+  position: absolute;
+  top: 100px;
+  left: -20px;
+  min-width: 160px;
+  background: rgba(7, 9, 14, 0.9);
+  border: 1px solid var(--thirium-cyan);
+  padding: 4px 8px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--thirium-cyan);
+}

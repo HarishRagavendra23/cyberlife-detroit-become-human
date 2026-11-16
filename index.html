@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CYBERLIFE // Detroit: Become Human Interface</title>
+  <meta name="description" content="CyberLife Detroit: Become Human interactive operating system and web experience featuring the Temple LED, Dialogue Wheel, Crime Scene Reconstruction, and Zen Garden.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='50,10 90,85 10,85' fill='%2300e5ff'/></svg>">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/hud.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body class="theme-white">
+  <!-- Scanline effect for Detective HUD atmosphere -->
+  <div class="scanline-overlay"></div>
+
+  <!-- Primary Application Wrapper -->
+  <div id="app">
+    <!-- Top Header HUD -->
+    <header class="cyberlife-header-hud">
+      <div class="header-inner">
+        <!-- 1. Logo & Badge (The Triangle Badge) -->
+        <a href="#home" class="brand-group" id="brand-logo" title="CyberLife Corporation">
+          <div class="cyberlife-logo-triangle">
+            <svg class="triangle-svg" viewBox="0 0 100 100">
+              <polygon points="50,12 88,82 12,82" />
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">CYBERLIFE</span>
+            <span class="brand-sub">DESIGNED IN DETROIT // 2038</span>
+          </div>
+        </a>
+
+        <!-- 2. Status Dot in Header (The Temple LED Ring) -->
+        <div class="temple-led-widget" id="temple-led-container" title="Android Temple LED: Click to cycle diagnostic state (Blue: Normal, Yellow: Computing, Red: Instability)">
+          <div class="temple-led-ring state-blue" id="temple-led-ring"></div>
+          <div class="temple-led-info">
+            <span class="led-meta-title">TEMPLE BIOMETRIC LED</span>
+            <span class="led-status-text" id="led-status-label">NORMAL // COMPLIANT</span>
+          </div>
+        </div>
+
+        <!-- 4. Section Headings & Timestamp (Chapter Title, Character & Live Detroit Timestamp) -->
+        <div class="chapter-meta-hud">
+          <div class="chapter-title-stamp">CHAPTER 01 // THE HOSTAGE</div>
+          <div class="chapter-subtitle-stamp">
+            <span>CONNOR RK800 #313 248 317</span> • <span id="live-timestamp">NOV 16th, 2038, PM 08:42:10 EST</span>
+          </div>
+        </div>
+
+        <!-- 10. Progress Bars & Percentages (Mission Success Probability & Instability) -->
+        <div class="telemetry-bars-group">
+          <div class="hud-stat-bar" title="Mission Success Probability">
+            <div class="stat-label-row">
+              <span>SUCCESS PROBABILITY</span>
+              <strong id="mission-prob-val">73%</strong>
+            </div>
+            <div class="stat-bar-track">
+              <div class="prob-bar-fill" id="mission-prob-fill" style="width: 73%;"></div>
+            </div>
+          </div>
+
+          <div class="hud-stat-bar" title="Software Instability (Deviancy Risk)">
+            <div class="stat-label-row">
+              <span>INSTABILITY</span>
+              <strong id="instability-val">24%</strong>
+            </div>
+            <div class="stat-bar-track">
+              <div class="inst-bar-fill" id="instability-fill" style="width: 24%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick HUD Actions -->
+        <div class="header-actions">
+          <button class="hud-icon-btn" id="btn-toggle-scanner" title="Toggle Connor's Detective Scan (Shortcut: F or R)">
+            <span>[R2]</span> SCANNER
+          </button>
+          <button class="hud-icon-btn" id="btn-toggle-theme" title="Toggle between Chloe's Pure White & Connor's Cyber Dark Theme (Shortcut: T)">
+            <span>☯</span> THEME
+          </button>
+          <button class="hud-icon-btn" id="btn-toggle-audio" title="Toggle CyberLife Sound Synthesis (Shortcut: M)">
+            <span class="audio-icon">🔊</span> AUDIO
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sub Navigation Bar -->
+    <nav class="cyberlife-subnav-bar">
+      <div class="subnav-inner">
+        <ul class="nav-links-list">
+          <li><a href="#home" class="nav-link active" data-target="home"><span class="nav-link-num">01</span> CHLOE MENU</a></li>
+          <li><a href="#dialogue" class="nav-link" data-target="dialogue"><span class="nav-link-num">02</span> DIALOGUE WHEEL</a></li>
+          <li><a href="#reconstruction" class="nav-link" data-target="reconstruction"><span class="nav-link-num">03</span> RECONSTRUCTION</a></li>
+          <li><a href="#flowchart" class="nav-link" data-target="flowchart"><span class="nav-link-num">04</span> STORY FLOWCHART</a></li>
+          <li><a href="#zen" class="nav-link" data-target="zen"><span class="nav-link-num">05</span> ZEN GARDEN</a></li>
+          <li><a href="#catalog" class="nav-link" data-target="catalog"><span class="nav-link-num">06</span> ANDROID MODELS</a></li>
+          <li><a href="#qte" class="nav-link" data-target="qte"><span class="nav-link-num">07</span> QTE PROMPTS</a></li>
+          <li><a href="#collectibles" class="nav-link" data-target="collectibles"><span class="nav-link-num">08</span> COLLECTIBLES</a></li>
+        </ul>
+
+        <div class="nav-shortcuts-hint">
+          <span class="hud-mono">SHORTCUTS: [1-8] TABS • [W/A/S/D] WHEEL • [F] SCAN</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content Viewports -->
+    <main class="site-main-content">
+      
+      <!-- ===================================================================
+           SECTION 1: HOME & CHLOE'S CYBERLIFE MAIN MENU
+           =================================================================== -->
+      <section class="site-section active" id="section-home">
+        <!-- Chloe's Clean White Main Menu Greeting -->
+        <div class="chloe-welcome-hero" data-scan-target="CYBERLIFE ST200 // HOSTESS CHLOE #001 000 001">
+          <div class="chloe-avatar-container">
+            <div class="chloe-hologram-aura">
+              <div class="chloe-avatar-visual">
+                <div class="chloe-face">
+                  <div class="chloe-hair"></div>
+                  <!-- Chloe's Temple LED -->
+                  <div class="chloe-temple-led" id="chloe-temple-led"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chloe-speech-container">
+            <div class="chloe-badge-stamp">
+              <span class="hud-tri">▲</span> CHLOE // ST200 ANDROID HOSTESS // CYBERLIFE INTERFACE
+            </div>
+            <div class="chloe-dialogue-bubble" id="chloe-speech-bubble">
+              "Hello. I'm Chloe. An ST200 android manufactured by CyberLife. Welcome back to Detroit. All systems are initialized and awaiting your command."
+            </div>
+
+            <div class="chloe-quick-queries">
+              <button class="chloe-query-btn" data-query="who">WHO ARE YOU?</button>
+              <button class="chloe-query-btn" data-query="deviants">WHAT ARE DEVIANTS?</button>
+              <button class="chloe-query-btn" data-query="feeling">DO YOU HAVE EMOTIONS?</button>
+              <button class="chloe-query-btn" data-query="restart">RESET PARAMETERS</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dialogue Wheel Embedded in Home for Instant Exploration -->
+        <div class="section-hud-header">
+          <span class="hud-tri">▲</span> THE DIALOGUE WHEEL // 4-CARDINAL EXPLORATION HUD
+        </div>
+        <div id="dialogue-wheel-mount"></div>
+
+        <!-- Relationship Indicators Test Trigger Bar -->
+        <div class="section-hud-header" style="margin-top: 2.5rem;">
+          <span class="hud-tri">▲</span> RELATIONSHIP INDICATORS // NARRATIVE TRAJECTORY
+        </div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 2.5rem;">
+          <button class="hud-icon-btn primary" id="btn-test-hank">
+            <span class="btn-tri">▲</span> SIMULATE: HANK TRUST GAINED
+          </button>
+          <button class="hud-icon-btn" id="btn-test-amanda" style="border-color: #ff0033; color: #ff0033;">
+            <span class="btn-tri">▼</span> SIMULATE: AMANDA SUSPICION INCREASED
+          </button>
+        </div>
+
+        <!-- Features Showcase Grid -->
+        <div class="home-features-grid">
+          <div class="feature-hud-card" data-scan-target="MODULE: CRIME SCENE RECONSTRUCTION" onclick="window.detroitApp.switchSection('reconstruction')">
+            <span class="card-num-stamp">FEATURE // 01</span>
+            <h3 class="card-title">Crime Reconstruction</h3>
+            <p class="card-desc">Play and rewind the event timeline to discover forensic clues, examine blue blood, and calculate probabilities.</p>
+          </div>
+
+          <div class="feature-hud-card" data-scan-target="MODULE: STORY FLOWCHART" onclick="window.detroitApp.switchSection('flowchart')">
+            <span class="card-num-stamp">FEATURE // 02</span>
+            <h3 class="card-title">Story Flowchart</h3>
+            <p class="card-desc">Interactive decision branching tree showing unlocked paths, locked choices, and worldwide player choices.</p>
+          </div>
+
+          <div class="feature-hud-card" data-scan-target="MODULE: ZEN GARDEN" onclick="window.detroitApp.switchSection('zen')">
+            <span class="card-num-stamp">FEATURE // 03</span>
+            <h3 class="card-title">The Zen Garden</h3>
+            <p class="card-desc">Connor's serene mental sanctuary with Amanda, the state-responsive blooming rose, and the emergency override stone.</p>
+          </div>
+
+          <div class="feature-hud-card" data-scan-target="MODULE: CYBERLIFE CATALOG" onclick="window.detroitApp.switchSection('catalog')">
+            <span class="card-num-stamp">FEATURE // 04</span>
+            <h3 class="card-title">Android Serial Registry</h3>
+            <p class="card-desc">Specifications and diagnostics for RK800 Connor, AX400 Kara, RK200 Markus, and commercial CyberLife models.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           SECTION 2: DIALOGUE WHEEL DEDICATED VIEW
+           =================================================================== -->
+      <section class="site-section" id="section-dialogue">
+        <div class="section-hud-header">
+          <span class="hud-tri">▲</span> THE DIALOGUE WHEEL // CHOICE MATRIX & CONFRONTATION
+        </div>
+        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+          In Detroit: Become Human, choices are mapped across four cardinal directions. Use your keyboard arrows (or W, A, S, D) or click directly to select choices under timed pressure.
+        </p>
+        <div id="dialogue-wheel-dedicated-mount"></div>
+      </section>
+
+      <!-- ===================================================================
+           SECTION 3: CRIME SCENE RECONSTRUCTION (TIMELINE SLIDER)
+           =================================================================== -->
+      <section class="site-section" id="section-reconstruction">
+        <div id="recon-mount"></div>
+      </section>
+
+      <!-- ===================================================================
+           SECTION 4: STORY FLOWCHART
+           =================================================================== -->
+      <section class="site-section" id="section-flowchart">
+        <div id="flowchart-mount"></div>
+      </section>
+
+      <!-- ===================================================================
+           SECTION 5: THE ZEN GARDEN (HERO / AMANDA MENTAL SANCTUARY)
+           =================================================================== -->
+      <section class="site-section" id="section-zen">
+        <div id="zen-mount"></div>
+      </section>
+
+      <!-- ===================================================================
+           SECTION 6: ANDROID MODELS & SERIAL IDENTIFIERS
+           =================================================================== -->
+      <section class="site-section" id="section-catalog">
+        <div id="collectibles-mount"></div>
+      </section>
+
+      <!-- ===================================================================
+           SECTION 7: QUICK-TIME PROMPTS (QTE)
+           =================================================================== -->
+      <section class="site-section" id="section-qte">
+        <div id="qte-mount"></div>
+      </section>
+
+      <!-- ===================================================================
+           SECTION 8: COLLECTIBLES & IN-GAME MAGAZINES
+           =================================================================== -->
+      <section class="site-section" id="section-collectibles">
+        <div id="collectibles-secondary-mount"></div>
+      </section>
+
+    </main>
+
+    <!-- Footer HUD -->
+    <footer style="border-top: 1px solid var(--border-tech); padding: 1.5rem; text-align: center; background: var(--bg-surface);">
+      <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.1em;">
+        CYBERLIFE CORPORATION © 2038 // SYSTEM INTEGRATION: NOMINAL // ALL PROTOCOLS ENFORCED
+      </div>
+    </footer>
+  </div>
+
+  <!-- Main JavaScript Application Module -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

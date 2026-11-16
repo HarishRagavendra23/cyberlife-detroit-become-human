@@ -1,0 +1,259 @@
+/**
+ * Detroit: Become Human - Base & Design System
+ * Thirium Blue accent, CyberLife pristine white / Detroit cyberpunk dark surfaces,
+ * thin HUD lines, geometric triangles, and futuristic typography.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap');
+
+:root {
+  /* Thirium Blue Accents */
+  --thirium-blue: #00b4d8;
+  --thirium-cyan: #00e5ff;
+  --thirium-glow: rgba(0, 229, 255, 0.4);
+  --thirium-dim: rgba(0, 180, 216, 0.15);
+
+  /* Status Colors */
+  --led-blue: #00e5ff;
+  --led-yellow: #ffb703;
+  --led-red: #ff0033;
+  --warning-red: #ff0033;
+  --warning-glow: rgba(255, 0, 51, 0.4);
+
+  /* CyberLife Pure White Theme (Default) */
+  --bg-primary: #f4f6fa;
+  --bg-surface: #ffffff;
+  --bg-card: rgba(255, 255, 255, 0.88);
+  --bg-translucent: rgba(255, 255, 255, 0.75);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border-subtle: rgba(15, 23, 42, 0.08);
+  --border-tech: rgba(0, 180, 216, 0.35);
+  --hud-frame: rgba(0, 180, 216, 0.2);
+  --shadow-hud: 0 8px 32px rgba(0, 180, 216, 0.08);
+
+  /* Fonts */
+  --font-main: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Orbitron', 'Rajdhani', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace, Courier;
+
+  /* HUD Angles */
+  --chamfer-sm: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  --chamfer-md: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+  --chamfer-lg: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 22px 100%, 0 calc(100% - 22px));
+}
+
+/* Detroit Cyber Dark Mode */
+body.theme-dark {
+  --bg-primary: #07090e;
+  --bg-surface: #0c1017;
+  --bg-card: rgba(14, 20, 31, 0.85);
+  --bg-translucent: rgba(10, 15, 24, 0.78);
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-tech: rgba(0, 229, 255, 0.4);
+  --hud-frame: rgba(0, 229, 255, 0.18);
+  --shadow-hud: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+/* Reset & Box Sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  font-family: var(--font-main);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle CyberLife Hex / Grid Background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: 
+    radial-gradient(circle at 50% 10%, rgba(0, 180, 216, 0.06), transparent 70%),
+    linear-gradient(rgba(0, 180, 216, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 180, 216, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 30px 30px, 30px 30px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Scanline Overlay Effect for Connor's Mode */
+.scanline-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 229, 255, 0.015) 3px,
+    rgba(0, 229, 255, 0.015) 4px
+  );
+  z-index: 998;
+  opacity: 0.75;
+}
+
+/* Site Layout */
+#app {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.site-main-content {
+  flex: 1;
+  max-width: 1360px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 4rem 1.5rem;
+}
+
+/* Section visibility */
+.site-section {
+  display: none;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.site-section.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Detroit Cyber HUD Utilities */
+.hud-tri {
+  display: inline-block;
+  color: var(--thirium-cyan);
+  font-size: 0.85em;
+  filter: drop-shadow(0 0 6px var(--thirium-glow));
+  margin-right: 6px;
+}
+
+.hud-tri.red-tri {
+  color: var(--led-red);
+  filter: drop-shadow(0 0 6px var(--warning-glow));
+}
+
+.hud-mono {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  color: var(--thirium-blue);
+}
+
+.btn-tri {
+  font-size: 0.75em;
+  margin-right: 4px;
+}
+
+/* Common Section Headings */
+.section-hud-header {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-tech);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+
+.section-hud-header.alert-mode {
+  border-bottom-color: var(--led-red);
+  color: var(--led-red);
+}
+
+/* Software Instability Glitch Effect on Body */
+body.software-instability-glitch {
+  animation: hudGlitch 0.25s infinite ease-in-out;
+}
+
+@keyframes hudGlitch {
+  0% { transform: translate(0); filter: hue-rotate(0deg); }
+  25% { transform: translate(-3px, 2px); filter: hue-rotate(90deg) contrast(1.2); }
+  50% { transform: translate(3px, -2px); filter: hue-rotate(180deg); }
+  75% { transform: translate(-2px, -1px); filter: hue-rotate(270deg); }
+  100% { transform: translate(0); filter: hue-rotate(0deg); }
+}
+
+/* Software Instability Toast Banner */
+.software-instability-banner {
+  position: fixed;
+  top: 85px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-30px);
+  background: rgba(255, 0, 51, 0.95);
+  color: #ffffff;
+  padding: 0.85rem 2.2rem;
+  border: 1px solid #ffffff;
+  box-shadow: 0 0 30px rgba(255, 0, 51, 0.8), 0 0 10px #ff0033 inset;
+  clip-path: var(--chamfer-md);
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.software-instability-banner.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.instability-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.instability-triangle {
+  font-size: 1.4rem;
+  animation: pulseTri 0.6s infinite alternate;
+}
+
+@keyframes pulseTri {
+  0% { opacity: 0.5; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1.2); }
+}
+
+.instability-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: 0.16em;
+}
+
+.instability-sub {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  opacity: 0.9;
+  border-left: 1px solid rgba(255, 255, 255, 0.4);
+  padding-left: 10px;
+}
